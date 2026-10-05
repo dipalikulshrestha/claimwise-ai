@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "ClaimWise Quality Gate",
+      "trigger": "PostFileSave",
+      "description": "Automatic ClaimWise backend quality gate. Runs on every backend Python file save: tests (pytest), linting (ruff check), formatting (ruff format --check), and type checking (mypy). Uses the project virtual environment explicitly. Fails fast if any check does not pass.",
+      "matcher": "backend/.*\\.py$",
+      "action": {
+        "type": "command",
+        "command": "cd backend && .venv/bin/pytest -q && .venv/bin/ruff check . && .venv/bin/ruff format --check . && .venv/bin/mypy app",
+        "timeout": 120
+      }
+    }
+  ]
+}
